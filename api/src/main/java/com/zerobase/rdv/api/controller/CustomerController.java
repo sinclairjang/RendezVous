@@ -14,12 +14,14 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    // 매장 조회
     @GetMapping("/find/{businessName}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> findBusiness(@PathVariable String businessName) {
         return ResponseEntity.ok(customerService.findBusiness(businessName));
     }
 
+    // 매장 예약
     @PostMapping("/reserve/{businessId}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> makeReservation(@PathVariable Long businessId) {
@@ -27,6 +29,7 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    // 매장 예약 컨펌
     @PostMapping("/confirm/{reservationId}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> confirmReservation(@PathVariable Long reservationId) {

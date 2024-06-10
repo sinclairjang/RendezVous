@@ -55,6 +55,7 @@ public class CustomerService {
 
     }
 
+
     @Transactional
     public void makeReservation(Long businessId) {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -74,6 +75,7 @@ public class CustomerService {
                 businessRepository.findById(businessId)
                         .orElseThrow(() -> new RuntimeException("Business not found"));
 
+        // 예약 가능 확인 후 진행
         Accommodation accommodation = business.getAccommodation();
         if (accommodation.getCurrentAvailability().equals(0L)) {
             throw new RuntimeException("Fully booked.");
@@ -106,6 +108,8 @@ public class CustomerService {
         if (reservation.getCustomer().getId().equals(customer.getId())) {
             throw new RuntimeException("Reservation holder not matched");
         }
+
+        /* 예약 10분전에 도착하여 키오스크를 통해서 방문 확인을 진행 */
 
         if (LocalDateTime.now().isBefore(reservation.getCreatedOn().minusMinutes(10))) {
             throw new RuntimeException("Arrival too early.");

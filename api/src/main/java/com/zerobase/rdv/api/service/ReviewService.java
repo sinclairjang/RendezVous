@@ -31,6 +31,7 @@ public class ReviewService {
         this.reservationRepository = reservationRepository;
     }
 
+    // 권한: 예약 및 사용자
     @PreAuthorize("@reviewWritePermission.hasPermission(#reviewDto.reservationId, 'reservation', ''")
     @Transactional
     public ReviewDto.Out postReview(ReviewDto.In reviewDto) {
@@ -54,6 +55,7 @@ public class ReviewService {
         return new ReviewDto.Out(review.getId(), review.getUpdatedOn());
     }
 
+    // 권한: 리뷰 작성자
     @PreAuthorize("@reviewEditPermission.hasPermission(#reviewId, 'reservation', ''")
     @Transactional
     public ReviewDto.Out editReview(Long reviewId, String text) {
@@ -65,6 +67,7 @@ public class ReviewService {
         return new ReviewDto.Out(review.getId(), review.getUpdatedOn());
     }
 
+    // 권한: 리뷰 작성자 | 매장 관리자
     @PreAuthorize("@reviewDeletePermission.hasPermission(#reviewId, 'reservation', ''")
     public void deleteReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);

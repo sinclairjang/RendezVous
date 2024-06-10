@@ -8,6 +8,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+/* 멤버십 트리
+   | 기본 ---> 컨슈머
+   |       \-> 비즈니스 ---> 파트너
+   |
+   | - 멤버십에 따라 차등하게 권한 지정
+   | - 하나의 계정으로 컨슈머, 비즈니스 모두 가입 가능
+ */
 @Service
 public class MembershipService {
     private final AuthorizationService authorizationService;

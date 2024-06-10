@@ -15,6 +15,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    // 리뷰 작성
     @PostMapping("/post")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> postReview(
@@ -24,6 +25,7 @@ public class ReviewController {
                 reviewService.postReview(reviewDto));
     }
 
+    // 리뷰 수정
     @PostMapping("/edit/{reviewId}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> editReview(
@@ -33,6 +35,7 @@ public class ReviewController {
                 reviewService.editReview(Long.parseLong(reviewId), text));
     }
 
+    // 리뷰 삭제
     @PostMapping("/delete")
     @PreAuthorize("hasAnyRole('CUSTOMER', 'MANAGER')")
     public ResponseEntity<?> deleteReview(

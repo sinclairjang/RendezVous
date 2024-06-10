@@ -19,6 +19,7 @@ public class BusinessController {
         this.businessService = businessService;
     }
 
+    // 매장 등록
     @PostMapping("/register")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> register(@RequestBody BusinessDto businessDto) {
@@ -27,6 +28,7 @@ public class BusinessController {
         return ResponseEntity.ok().build();
     }
 
+    // 점주 당일 예약 정보 확인
     @GetMapping("/reservation/today")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getTodayReservations(
@@ -38,6 +40,7 @@ public class BusinessController {
                         pageable));
     }
 
+    // 점주 요청 기간 내 예약 정보 확인
     @GetMapping("/reservation")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getReservations(
