@@ -11,7 +11,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String customerName;
-    private String customerContact;
+    private String customerEmail;
     private Address customerAddress;
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -29,11 +29,11 @@ public class Customer {
 
     Customer() {}
 
-    Customer(String customerName,
-             String customerContact,
+    public Customer(String customerName,
+             String customerEmail,
              Address customerAddress) {
         this.customerName = customerName;
-        this.customerContact = customerContact;
+        this.customerEmail = customerEmail;
         this.customerAddress = customerAddress;
     }
 
@@ -45,8 +45,8 @@ public class Customer {
         return customerName;
     }
 
-    public String getCustomerContact() {
-        return customerContact;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
     public Address getCustomerAddress() {

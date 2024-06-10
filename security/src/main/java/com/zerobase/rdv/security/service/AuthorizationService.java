@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,12 +23,15 @@ public class AuthorizationService {
     private final AuthenticationManager authenticationManager;
     private final ApplicationUserRepository applicationUserRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public AuthorizationService(JwtService jwtService,
                                 AuthenticationManager authenticationManager,
-                                ApplicationUserRepository applicationUserRepository) {
+                                ApplicationUserRepository applicationUserRepository, PasswordEncoder passwordEncoder) {
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.applicationUserRepository = applicationUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String issueToken(UserCredentials userCredentials) {
@@ -57,7 +61,7 @@ public class AuthorizationService {
 
         ApplicationUser applicationUser =
                 new ApplicationUser(userCredentials.getUsername(),
-                        userCredentials.getPassword(),
+                        passwordEncoder.encode(userCredentials.getPassword()),
                         new HashSet<>(Collections.singleton(Membership.BASIC)));
 
         applicationUserRepository.save(applicationUser);

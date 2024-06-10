@@ -19,21 +19,21 @@ public class MembershipController {
     }
 
     // 멤버십(컨슈머) 가입
-    @RequestMapping("/join/Customer")
+    @RequestMapping("/join/customer")
     public ResponseEntity<?> joinCustomer() {
         membershipService.acquireMembership(Membership.CUSTOMER);
        return ResponseEntity.ok().build();
     }
 
     // 멤버십(비즈니스) 가입
-    @RequestMapping("/join/Business")
+    @RequestMapping("/join/business")
     public ResponseEntity<?> joinBusiness() {
         membershipService.acquireMembership(Membership.BUSINESS);
         return ResponseEntity.ok().build();
     }
 
     // 멤버십(파트너) 승격
-    @RequestMapping("/join/Business/Partner")
+    @RequestMapping("/join/Business/partner")
     public ResponseEntity<?> joinBusinessPartner() {
         membershipService.acquireMembership(Membership.PARTNER);
         return ResponseEntity.ok().build();

@@ -1,6 +1,7 @@
 package com.zerobase.rdv.api.service;
 
 import com.zerobase.rdv.api.controller.dto.BusinessDto;
+import com.zerobase.rdv.api.controller.dto.CustomerDto;
 import com.zerobase.rdv.domain.model.*;
 import com.zerobase.rdv.domain.repository.ApplicationUserRepository;
 import com.zerobase.rdv.domain.repository.BusinessRepository;
@@ -55,7 +56,6 @@ public class CustomerService {
 
     }
 
-
     @Transactional
     public void makeReservation(Long businessId) {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -87,6 +87,7 @@ public class CustomerService {
         reservationRepository.save(reservation);
     }
 
+    @Transactional
     public void confirmReservation(Long reservationId) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
@@ -121,5 +122,32 @@ public class CustomerService {
         }
 
         reservation.setReservationResult(ReservationResult.CONFIRMED);
+    }
+
+    @Transactional
+    public void registerCustomer(CustomerDto customerDto) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication auth = context.getAuthentication();
+        Optional<ApplicationUser> applicationUser =
+                applicationUserRepository.findByUsername(auth.getName());
+
+        if (applicationUser.isEmpty()) {
+            throw new RuntimeException("Application user not found.");
+        }
+
+        if (customerRepository.findByApplicationUser(applicationUser.get())
+                .isPresent()) {
+            throw new RuntimeException("Customer has already been registered.");
+        };
+
+        Customer customer = makeEntity(customerDto);
+
+        customerRepository.save(customer);
+    }
+
+    private Customer makeEntity(CustomerDto customerDto) {
+        return new Customer(customerDto.getCustomerName(),
+                customerDto.getCustomerEmail(),
+                customerDto.getCustomerAddress());
     }
 }

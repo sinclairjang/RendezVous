@@ -1,5 +1,7 @@
 package com.zerobase.rdv.api.controller;
 
+import com.zerobase.rdv.api.controller.dto.BusinessDto;
+import com.zerobase.rdv.api.controller.dto.CustomerDto;
 import com.zerobase.rdv.api.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +14,15 @@ public class CustomerController {
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @PostMapping("/register")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> register(
+            @RequestBody CustomerDto customerDto) {
+        customerService.registerCustomer(customerDto);
+
+        return ResponseEntity.ok().build();
     }
 
     // 매장 조회
