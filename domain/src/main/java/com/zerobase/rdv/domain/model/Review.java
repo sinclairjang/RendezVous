@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "RDV_REVIEW")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

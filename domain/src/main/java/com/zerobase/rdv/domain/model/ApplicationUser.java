@@ -22,7 +22,9 @@ public class ApplicationUser {
     private String password;
 
     @Column(nullable=false)
-    @ElementCollection(targetClass = Membership.class, fetch = FetchType.EAGER)
+    @ElementCollection(
+            targetClass = Membership.class,
+            fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Membership> roles = new HashSet<>();
 

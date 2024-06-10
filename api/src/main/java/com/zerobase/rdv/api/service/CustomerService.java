@@ -10,6 +10,7 @@ import com.zerobase.rdv.domain.type.ReservationResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CustomerService {
     private final ApplicationUserRepository applicationUserRepository;
     private final CustomerRepository customerRepository;

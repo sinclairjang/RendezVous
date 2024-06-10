@@ -27,7 +27,7 @@ public class BusinessController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/reservation")
+    @GetMapping("/reservation/today")
     @PreAuthorize("hasRole('PARTNER')")
     public ResponseEntity<?> getTodayReservations(
             final Pageable pageable) {
