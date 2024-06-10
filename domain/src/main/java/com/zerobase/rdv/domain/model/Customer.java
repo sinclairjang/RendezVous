@@ -27,7 +27,7 @@ public class Customer {
     @JoinColumn(unique = true)
     private ApplicationUser applicationUser;
 
-    Customer() {};
+    Customer() {}
 
     Customer(String customerName,
              String customerContact,
